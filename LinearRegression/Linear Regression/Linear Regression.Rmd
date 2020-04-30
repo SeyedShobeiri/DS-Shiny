@@ -1,0 +1,37 @@
+---
+title: "Linear Regression"
+output: 
+  flexdashboard::flex_dashboard:
+    source_code: "https://github.com/SeyedShobeiri/DS-Shiny"
+    theme: default
+    orientation: columns
+runtime: shiny
+
+---
+
+```{r setup, echo=FALSE, cache=TRUE,warning=FALSE,message=FALSE,include=FALSE}
+# In this chunk only deal with package install and load
+library(flexdashboard)
+library(shiny)
+
+```
+
+```{r global, include=FALSE, echo=FALSE, cache=TRUE,warning=FALSE,message=FALSE}
+
+data_reactive = reactive({
+  inFile = input$data
+
+  if (is.null(inFile)) {
+    return(NULL)
+  }
+
+  data_reactive = read.csv(inFile$datapath, header = input$header)
+})
+```
+
+Column {.sidebar}
+-------------------------------------------------------------------
+```{r}
+fileInput("data","Data",multiple = FALSE,buttonLabel = "Choose CSV File",accept = ".csv")
+checkboxInput("header","Header",TRUE)
+```
